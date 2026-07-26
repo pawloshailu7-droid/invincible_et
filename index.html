@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invincible Hub & Portfolio</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Teko:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --space-bg: #050811;
+            --card-bg: rgba(11, 19, 43, 0.7);
+            --invincible-yellow: #FFC700;
+            --invincible-blue: #00A3FF;
+            --invincible-pink: #FF0055;
+            --text-main: #FFFFFF;
+            --text-muted: #A0AEC0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--space-bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 80% 10%, rgba(0, 163, 255, 0.18) 0%, transparent 40%),
+                radial-gradient(circle at 10% 60%, rgba(255, 199, 0, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 90%, rgba(255, 0, 85, 0.12) 0%, transparent 50%),
+                linear-gradient(180deg, #050811 0%, #0B132B 100%);
+            background-attachment: fixed;
+            padding-bottom: 60px;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(5, 8, 17, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Teko', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--invincible-yellow), var(--invincible-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--invincible-yellow);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .hero-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .title-badge {
+            font-family: 'Teko', sans-serif;
+            font-size: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 0.9;
+            text-align: center;
+            margin-bottom: 15px;
+            z-index: 5;
+            background: linear-gradient(135deg, var(--invincible-yellow) 0%, #FFF 50%, var(--invincible-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .poster-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 163, 255, 0.25);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            background: #111;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .poster-wrapper:hover {
+            animation-play-state: paused;
+            transform: translateY(-5px);
+        }
+
+        .hero-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Hotspots Layer */
+        .tray-hotspots {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hotspot-btn {
+            position: absolute;
+            display: block;
+            border-radius: 12px;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .hotspot-btn:hover {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.08);
+        }
+
+        /* Recalibrated Floating Phone Hotspot Positions */
+        .hs-tiktok { top: 9.5%; left: 40.5%; width: 7.5%; height: 16%; transform: rotate(18deg); }
+        .hs-youtube { top: 14.8%; left: 69.5%; width: 6.8%; height: 16%; transform: rotate(-18deg); }
+        .hs-instagram { top: 49%; left: 63.8%; width: 8.5%; height: 16%; transform: rotate(-22deg); }
+        .hs-telegram { top: 40.5%; left: 24.5%; width: 10.5%; height: 18%; transform: rotate(14deg); }
+
+        /* --- PORTFOLIO SECTION --- */
+        .portfolio-section {
+            max-width: 1100px;
+            margin: 60px auto 0;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 3.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--invincible-yellow);
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .portfolio-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .portfolio-card.featured {
+            border: 1px solid var(--invincible-yellow);
+            box-shadow: 0 0 20px rgba(255, 199, 0, 0.2);
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--invincible-yellow);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 199, 0, 0.2);
+        }
+
+        .card-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.85;
+            transition: transform 0.5s ease, opacity 0.3s ease;
+        }
+
+        /* Styling to cleanly frame the flame growth icon */
+        .featured .card-img {
+            object-fit: contain;
+            background-color: #FFFFFF;
+        }
+
+        .portfolio-card:hover .card-img {
+            transform: scale(1.08);
+            opacity: 1;
+        }
+
+        .card-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        .card-tag.viral-tag {
+            background: linear-gradient(135deg, var(--invincible-pink), var(--invincible-yellow));
+            color: #000;
+            box-shadow: 0 0 12px rgba(255, 0, 85, 0.6);
+        }
+
+        .card-tag.telegram-tag {
+            background: linear-gradient(135deg, var(--invincible-blue), #FFF);
+            color: #000;
+            box-shadow: 0 0 12px rgba(0, 163, 255, 0.5);
+        }
+
+        .card-tag.yt-tag {
+            background: linear-gradient(135deg, #FF0000, var(--invincible-yellow));
+            color: #FFF;
+            box-shadow: 0 0 12px rgba(255, 0, 0, 0.5);
+        }
+
+        .card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .card-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.1));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #FFF;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .card-action-btn:hover {
+            background: linear-gradient(135deg, var(--invincible-pink), var(--invincible-yellow));
+            color: #000;
+            border-color: var(--invincible-yellow);
+            box-shadow: 0 0 15px rgba(255, 199, 0, 0.4);
+        }
+
+        .card-action-btn.tg-btn:hover {
+            background: linear-gradient(135deg, var(--invincible-blue), #FFF);
+            color: #000;
+        }
+
+        .card-action-btn.yt-btn:hover {
+            background: linear-gradient(135deg, #FF0000, var(--invincible-yellow));
+            color: #FFF;
+            border-color: #FF0000;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 40px 20px 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 60px;
+        }
+
+        @media (max-width: 480px) {
+            .title-badge { font-size: 3rem; }
+            .section-title { font-size: 2.8rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <nav>
+        <div class="nav-logo">INVINCIBLE</div>
+        <ul class="nav-links">
+            <li><a href="#hero">Social Hub</a></li>
+            <li><a href="#works">My Works</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero">
+        <div class="hero-container">
+            
+            <h1 class="title-badge">SERVED FRESH</h1>
+
+            <div class="poster-wrapper">
+                <img src="img/Img1.png" alt="Invincible Social Delivery" class="hero-img">
+
+                <div class="tray-hotspots">
+                    <!-- Floating Phones Hotspots -->
+                    <a href="https://www.tiktok.com/@invincibl273" target="_blank" class="hotspot-btn hs-tiktok" title="Open TikTok"></a>
+                    <a href="https://www.youtube.com/@INVINCIBLE-p5n" target="_blank" class="hotspot-btn hs-youtube" title="Open YouTube"></a>
+                    <a href="https://www.instagram.com/invincible7445?igsh=N2x1N2Jsang0dDNm" target="_blank" class="hotspot-btn hs-instagram" title="Open Instagram"></a>
+                    <a href="https://t.me/INVINCIBLE7707" target="_blank" class="hotspot-btn hs-telegram" title="Open Telegram"></a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION -->
+    <section class="portfolio-section" id="works">
+        <div class="section-header">
+            <h2 class="section-title">MY CREATIVE WORKS</h2>
+            <p class="section-subtitle">Viral videos, editing assets, and upcoming content platforms</p>
+        </div>
+
+        <div class="portfolio-grid">
+
+            <!-- Card 1: TikTok Edits -->
+            <div class="portfolio-card featured">
+                <div class="card-img-wrapper">
+                    <span class="card-tag viral-tag"><i class="fa-solid fa-fire"></i> 100K+ Views</span>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWmHbUzerZc_R9ApoTxpDy8zxgPfg2arGrBKmnXvt6Kw&s=10" alt="Viral Growth Edit" class="card-img">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Featured TikTok Videos</h3>
+                    <p class="card-desc">High-engagement edits created for @invincibl273, featuring viral hits reaching over 100,000 organic views.</p>
+                    
+                    <div class="btn-group">
+                        <a href="https://www.tiktok.com/@invincibl273/video/7595149333528382741" target="_blank" class="card-action-btn">
+                            <i class="fa-solid fa-play"></i> Watch 100K+ Viral Edit
+                        </a>
+                        <a href="https://www.tiktok.com/@invincibl273/video/7555120876111269176" target="_blank" class="card-action-btn">
+                            <i class="fa-brands fa-tiktok"></i> Watch TikTok #2
+                        </a>
+                        <a href="https://www.tiktok.com/@invincibl273/video/7578122312315161867" target="_blank" class="card-action-btn">
+                            <i class="fa-brands fa-tiktok"></i> Watch TikTok #3
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Telegram Editing Tools -->
+            <div class="portfolio-card">
+                <div class="card-img-wrapper">
+                    <span class="card-tag telegram-tag"><i class="fa-solid fa-download"></i> Free Resources</span>
+                    <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80" alt="Color Correction Presets Thumbnail" class="card-img">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Editing Tools & Presets</h3>
+                    <p class="card-desc">Get access to custom Color Correction (CC) presets, overlay packs, project files, and editing assets on my Telegram channel.</p>
+                    <a href="https://t.me/INVINCIBLE7707" target="_blank" class="card-action-btn tg-btn">
+                        <i class="fa-brands fa-telegram"></i> Get Tools on Telegram
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 3: YouTube Channel -->
+            <div class="portfolio-card">
+                <div class="card-img-wrapper">
+                    <span class="card-tag yt-tag"><i class="fa-brands fa-youtube"></i> Official Channel</span>
+                    <img src="https://kathylovesphysics.com/wp-content/uploads/2025/03/youtube-coming-soon-01.png" alt="YouTube Launch Thumbnail" class="card-img">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">YouTube Channel</h3>
+                    <p class="card-desc">Full-length editing tutorials, breakdowns, 4K edits, and step-by-step creation guides available on YouTube!</p>
+                    <a href="https://www.youtube.com/@INVINCIBLE-p5n" target="_blank" class="card-action-btn yt-btn">
+                        <i class="fa-brands fa-youtube"></i> Visit YouTube Channel
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; Invincible Delivery Hub (@invincibl273). All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
